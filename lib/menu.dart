@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
-  final String nama = "Farrell Bagoes Rahmantyo"; //nama
-  final String npm = "2406420596"; //npm
-  final String kelas = "E"; //kelas
+  final String nama = "Farrell Bagoes Rahmantyo";
+  final String npm = "2406420596";
+  final String kelas = "E";
 
   final List<ItemHomePage> items = [
     ItemHomePage("See Football News", Icons.newspaper),
@@ -13,80 +13,71 @@ class MyHomePage extends StatelessWidget {
     ItemHomePage("Logout", Icons.logout),
   ];
 
+
   @override
-  Widget build(BuildContext context){
-    // Scaffold Menyediakan Struktur Dasar AppBar dan Body
+  Widget build(BuildContext context) {
+    // Scaffold menyediakan struktur dasar halaman dengan AppBar dan body.
     return Scaffold(
-      // Appbar : bagian atas halaman yang menampilkan judul
-      appBar: AppBar(
-        title: const Text(
-          'Football News',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      // AppBar macam navbar (i think)
+        appBar: AppBar(
+          title: const Text('Football News', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold), ),
+          // Warna latar navbar diambil dari color scheme primary aplikasi
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
-        // Warna BG App
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
-      // Body Halaman dengan padding di sekililingnya
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        // Menyusun Widget Secara Vertikal dalam sebuah Kolom
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          // Row untuk menampilkan 3 InfoCard secara Horizontal
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        // Body halaman dengan padding
+        body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                InfoCard(title: 'NPM', content: npm),
-                InfoCard(title: 'Name', content: nama),
-                InfoCard(title: 'Class', content: kelas),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InfoCard(title: 'NPM', content: npm),
+                    InfoCard(title: 'Name', content: nama),
+                    InfoCard(title: 'Class', content: kelas),
+                  ],
+                ),
+                // Memberikan jarak vertikal 16 unit.
+                const SizedBox(height: 16.0),
+
+                // di tengah halaman
+                Center(
+                    child: Column(
+                      // Menyusun secara vertikal
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 16.0),
+                          child: Text(
+                            "Selamat datang di Football News",
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0,),
+                          ),
+                        ),
+                        // GRid buat nampilin ItemCard dalam bentuk grid 3 kolom.
+                        GridView.count(
+                          primary: true,
+                          padding: const EdgeInsets.all(20),
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          crossAxisCount: 3,
+                          // shrinkWrap biar grid nyesuain tinggi konten
+                          shrinkWrap: true,
+                          children: items.map((ItemHomePage item) {
+                            return ItemCard(item);
+                          }).toList(),
+                        ),
+                      ],
+                    )
+                ),
               ],
-            ),
-            // Memberikan Jarak Vertikal
-            const SizedBox(height: 16.0,),
-            // Menempatkan Widget Berikutnya di tengah halaman
-            Center(
-              child: Column(
-                // Menyusun teks dan grid secara vertikal
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top:16.0),
-                    child: Text(
-                      'Selamat Datang di Football News',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                    ),
-                  ),
-
-                  // Grid untuk menampilkan ItemCard dalam bentuk grid 3 kolom.
-                  GridView.count(
-                    primary: true,
-                    padding: const EdgeInsets.all(20),
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 3,
-                    // Agar grid menyesuaikan tinggi kontennya.
-                    shrinkWrap: true,
-
-                    // Menampilkan ItemCard untuk setiap item dalam list items.
-                    children: items.map(
-                        (ItemHomePage item) {
-                          return ItemCard(item);
-                        }
-                    ).toList(),
-                  )
-                ],
-              ),
             )
-          ],
-        ),
-      ),
+        )
     );
   }
 }
 
 // Info Card
-class InfoCard extends StatelessWidget{
-
+class InfoCard extends StatelessWidget {
   final String title;
   final String content;
 
@@ -95,24 +86,21 @@ class InfoCard extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Card(
-      // Membuat Card dengan bayangan di bawah
-      elevation: 2.0,
-      child: Container(
-        // Mengatur Jarak dan Ukuran Kartu
-        width: MediaQuery.of(context).size.width/3,
-        padding: const EdgeInsets.all(16.0),
-        // Menyusun title dan Content secara Vertical
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+        elevation: 2.0,
+        child: Container(
+            width: MediaQuery.of(context).size.width / 3.5,
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8.0),
+                Text(content),
+              ],
             )
-          ],
-        ),
-
-      ),
-
+        )
     );
   }
 }
