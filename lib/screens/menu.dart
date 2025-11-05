@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:football_news/widgets/left_drawer.dart';
+import 'package:football_news/widgets/news_card.dart';
+
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
@@ -24,6 +27,7 @@ class MyHomePage extends StatelessWidget {
           // Warna latar navbar diambil dari color scheme primary aplikasi
           backgroundColor: Theme.of(context).colorScheme.primary,
         ),
+        drawer: LeftDrawer(),
         // Body halaman dengan padding
         body: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -112,58 +116,3 @@ class ItemHomePage {
   ItemHomePage(this.name, this.icon);
 }
 
-// Item Card
-class ItemCard extends StatelessWidget{
-  // Menampilkan Kartu dengan nama dan Icon
-
-  final ItemHomePage item;
-
-  const ItemCard(this.item, {super.key});
-
-  @override
-  Widget build(BuildContext context){
-    return Material(
-      // Warna Latar Belakang dari Tema Applikasi
-      color: Theme.of(context).colorScheme.secondary,
-      // Membuat Sudut Kartu Rounder
-      borderRadius: BorderRadius.circular(12),
-
-      child: InkWell(
-        // Aksi Ketika Kartu dipencet
-        onTap:(){
-          // Tampilkan Pesan SnackBar
-          ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"),)
-              );
-        },
-
-        // Container untuk menyimpan Text dan Icon
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child:Center(
-            child: Column(
-              // Menyusun Ikon dan Teks di Tengah Kartu
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color : Colors.white),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-}
